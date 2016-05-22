@@ -1,0 +1,30 @@
+{
+	"name": "metal-formValidator",
+	"version": "0.0.0",
+	"description": "My awesome Metal.js project",
+	"license": "BSD",
+	"repository": "metal/metal-formValidator",
+	"engines": {
+		"node": ">=0.12.0",
+		"npm": ">=3.0.0"
+	},
+	"main": "src/FormValidator.js",
+	"files": [
+		"src",
+		"test"
+	],
+	"scripts": {
+		"test": "gulp test"
+	},
+	"keywords": [
+		"metal"
+	],
+	"dependencies": {
+    "bootstrap": "^3.3.6",
+		"metal-state": "metal/metal-state#master"
+	},
+	"devDependencies": {
+		"gulp": "^3.8.11",
+		"gulp-metal": "^1.0.0"
+	}
+}
