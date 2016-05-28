@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Demo: FormValidator</title>
+	<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+
+	<script src="../build/globals/formValidator.js"></script>
+
+	<style>
+		input {
+			display: block;
+			margin: 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>From Validator</h1>
+	<h2>Simple</h2>
+
+	<form id="fm1">
+		<input name="text" id="text" type="text" required />
+
+		<input name="email" id="email" required />
+
+		<input name="url" id="url" type="url" required />
+
+		<input name="text1" id="text1" required />
+
+		<input type="image" />
+		<input type="submit" value="Submit">
+	</form>
+
+	<script type="text/javascript">
+		new metal.FormElementValidator({ formElement: 'text' });
+		new metal.FormElementValidator({ formElement: 'email', type: 'email' });
+		new metal.FormElementValidator({ formElement: 'url' });
+		new metal.FormElementValidator(
+			{
+				formElement: 'text1',
+				custom: function(value) {
+					return false;
+				}
+			}
+		);
+	</script>
+</body>
+</html>
