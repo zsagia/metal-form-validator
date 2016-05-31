@@ -15,34 +15,40 @@
 	</style>
 </head>
 <body>
-	<h1>From Validator</h1>
+	<h1>Form Element Validators</h1>
+	
 	<h2>Simple</h2>
-
 	<form id="fm1">
-		<input name="text" id="text" type="text" required />
+		<div class="form-group">
+			<label class="control-label" for="text1">Text1 (required)</label>
+			<input name="text1" id="text1" type="text" required />
+		</div>
 
-		<input name="email" id="email" required />
+		<div class="form-group">
+			<label class="control-label" for="email1">Email1 (required)</label>
+			<input name="email1" id="email1" type="email" required />
+		</div>
 
-		<input name="url" id="url" type="url" required />
+		<div class="form-group">
+			<label class="control-label" for="url1">URL1 (required)</label>
+			<input name="url1" id="url1" type="url" required />
+		</div>
 
-		<input name="text1" id="text1" required />
+		<div class="form-group">
+			<label class="control-label" for="text2">Text2 (required)</label>
+			<input name="text2" id="text2" required />
+		</div>
 
 		<input type="image" />
+
 		<input type="submit" value="Submit">
 	</form>
 
 	<script type="text/javascript">
-		new metal.FormElementValidator({ formElement: 'text' });
-		new metal.FormElementValidator({ formElement: 'email', type: 'email' });
-		new metal.FormElementValidator({ formElement: 'url' });
-		new metal.FormElementValidator(
-			{
-				formElement: 'text1',
-				custom: function(value) {
-					return false;
-				}
-			}
-		);
+		new metal.FormElementValidator({ formElement: 'text1' });
+		new metal.FormElementValidator({ formElement: 'email1' });
+		new metal.FormElementValidator({ formElement: 'url1',showAllMessages: true });
+		new metal.FormElementValidator({ formElement: 'text2' });
 	</script>
 </body>
 </html>
