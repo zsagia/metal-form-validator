@@ -11,69 +11,19 @@ class FormElementValidator extends State  {
 	constructor(opt_config) {
 		super(opt_config);
 
-		var instance = this;
-		let formElement = instance.formElement;
+		var formElement = this.formElement;
 		
 		instance.setForm_(formElement);
-		instance.createErrorContainer_();
 
-		dom.on(formElement, 'input', function(event) {
-			if (event.target.matches(':invalid')) {
-				var errorContainer = instance.addErrorContainer_();
+		if (this.validateOnInput) {
+			dom.on(formElement, 'input', this.validate.bind(this));
+		}
 
-				this.addFieldErrors(event.target.validity);
+		if (this.validateOnBlur) {
+			dom.on(formElement, 'blur', this.validate.bind(this));
+		}
 
-				console.log('input:invalid');
-			}
-			else {
-				var errorContainer = this.errorContainer_;
-
-				if (errorContainer) {
-					errorContainer.remove();
-					errorContainer = null;
-				}
-
-				console.log('input:valid');
-			}
-		}.bind(this));
-
-		dom.on(formElement, 'blur', function(event) {
-			if (event.target.matches(':invalid')) {
-				var errorContainer = instance.addErrorContainer_();
-
-				this.addFieldErrors(event.target.validity);
-
-				console.log('blur:invalid');
-			}
-			else {
-				var errorContainer = this.errorContainer_;
-
-				if (errorContainer) {
-					errorContainer.remove();
-					errorContainer = null;
-				}
-
-				console.log('blur:valid');
-			}
-		}.bind(this));
-
-		dom.on(formElement, 'valid', function(event) {
-			if (event.target.matches(':valid')) {
-				console.log('valid');
-			}
-		}.bind(this));
-
-		dom.on(formElement, 'invalid', function(event) {
-			var errorContainer = instance.addErrorContainer_();
-
-			if (event.target.matches(':invalid')) {
-				event.preventDefault();
-
-				this.addFieldErrors(event.target.validity);
-
-				console.log('invalid');
-			}
-		}.bind(this));
+		dom.on(formElement, 'invalid', this.validate.bind(this));
 	}
 
 	/**
@@ -84,7 +34,6 @@ class FormElementValidator extends State  {
 
 		if(!this.errorContainer_) {
 			errorContainer = document.createElement('div');
-
 			errorContainer.className = "form-validator-stack help-block";
 		}
 
@@ -104,7 +53,6 @@ class FormElementValidator extends State  {
 			}
 			else {
 				let nextSibling = this.formElement.nextElementSibling;
-
 				if (nextSibling) {
 					this.form_.insertBefore(errorContainer, nextSibling);
 				}
@@ -112,11 +60,9 @@ class FormElementValidator extends State  {
 					this.form_.appendChild(errorContainer);
 				}
 			}
-
-			this.errorContainer_ = errorContainer;
 		}
 		
-		return errorContainer;
+		return this.errorContainer_ = errorContainer;
 	}
 
 	/**
@@ -126,12 +72,20 @@ class FormElementValidator extends State  {
 	 * @param {Node} field
 	 * @param ruleName
 	 */
-	addFieldError(ruleName) {
-		var errorContainer = this.errorContainer_;
-		var divElement = document.createElement('div');
+	addOrRemoveFieldError(ruleName, failed) {
+		var errorContainer = this.errorContainer_,
+			errorField = this.getErrorField(ruleName);
 
-		divElement.innerHTML = this.strings[ruleName];
-		errorContainer.appendChild(divElement);
+		if (failed && !errorField) {
+			errorField = document.createElement('div');
+			errorField.innerHTML = this.strings[ruleName];
+			errorField.className = ruleName;
+
+			errorContainer.appendChild(errorField);
+		}
+		else if (!failed && errorField) {
+			errorField.remove();
+		}
 	}
 
 	/**
@@ -141,22 +95,28 @@ class FormElementValidator extends State  {
 	 * @param {Node} field
 	 * @param ruleName
 	 */
-	addFieldErrors(validity) {
-		var requiedFailed = validity['valueMissing'];
+	addOrRemoveFieldErrors(validity) {
+		this.addErrorContainer_()
 
-		if (requiedFailed) {
-			this.addFieldError('required');
+		for(errorKey in validity) {
+			let errorValue = validity[errorKey];
+
+			this.addOrRemoveFieldError(errorKey, errorValue);
 		}
 
-		if (this.showAllMessages) {
-			for(errorKey in validity) {
-				let errorValue = validity[errorKey];
-
-				if (errorValue) {
-					this.addFieldError(errorKey);
-				}
-			}
+		if (this.errorContainer_.childNodes.length) {
+			dom.addClasses(dom.closest(this.formElement, '.form-group'), 'has-error');
 		}
+	}
+
+	/**
+	 *
+	 */
+	getErrorField(ruleName) {
+		var errorContainer = this.errorContainer_,
+			divElement = errorContainer.getElementsByClassName(ruleName);
+
+		return divElement ? divElement[0] : null;
 	}
 
 	/**
@@ -171,6 +131,26 @@ class FormElementValidator extends State  {
 	 */
 	setFormElement_(value) {
 		return core.isElement(value) ? value : document.getElementById(value);
+	}
+
+	validate(event) {
+		if (event.target.matches(':invalid')) {
+			event.preventDefault();
+
+			this.addOrRemoveFieldErrors(event.target.validity);
+		}
+		else {
+			if (this.errorContainer_) {
+				dom.removeClasses(dom.closest(this.formElement, '.form-group'), 'has-error');
+				dom.addClasses(dom.closest(this.formElement, '.form-group'), 'has-success');
+
+				this.errorContainer_.remove();
+				this.errorContainer_ = null;
+			}
+			else {
+				dom.addClasses(dom.closest(this.formElement, '.form-group'), 'has-success');
+			}
+		}
 	}
 }
 
@@ -225,8 +205,8 @@ FormElementValidator.STATE = {
 			number: 'Please enter a valid number in {field}.',
 			range: 'Please enter a value between {0} and {1} in {field}.',
 			rangeLength: 'Please enter a value between {0} and {1} characters long in {field}.',
-			required: '{field} is required.',
-			url: 'Please enter a valid URL in {field}.'
+			valueMissing: '{field} is required.',
+			typeMismatch: 'Please enter a valid value in {field}.'
 		}
 	},
 
@@ -251,7 +231,7 @@ FormElementValidator.STATE = {
 	 */
 	validateOnInput: {
 		validator: core.isBoolean,
-		value: false
+		value: true
 	},
 };
 
