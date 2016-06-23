@@ -1,0 +1,13 @@
+{namespace FormElementValidator}
+{template .render}
+	{@param? elementClasses: string}
+	{@param? errorMessage: string}
+	{@param formElementField: html}
+	{@param? status: string}
+	<div class="form-element-validator{$elementClasses ? ' ' + $elementClasses : ''}{$status ? ' ' + $status : ''}">
+		{$formElementField}
+		{if $errorMessage}
+			<div class="form-validator-stack help-block">{$errorMessage}</div>
+		{/if}
+	</div>
+{/template}

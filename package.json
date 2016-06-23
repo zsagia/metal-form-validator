@@ -1,14 +1,14 @@
 {
-	"name": "metal-formValidator",
+	"name": "metal-form-validator",
 	"version": "0.0.0",
 	"description": "My awesome Metal.js project",
 	"license": "BSD",
-	"repository": "metal/metal-formValidator",
+	"repository": "metal/metal-form-validator",
 	"engines": {
 		"node": ">=0.12.0",
 		"npm": ">=3.0.0"
 	},
-	"main": "src/FormValidator.js",
+	"main": "src/formvalidator.js",
 	"files": [
 		"src",
 		"test"
@@ -21,7 +21,8 @@
 	],
 	"dependencies": {
     "bootstrap": "^3.3.6",
-		"metal-state": "metal/metal-state#master"
+		"metal-component": "metal/metal-component#master",
+		"metal-soy": "metal/metal-soy#master"
 	},
 	"devDependencies": {
 		"gulp": "^3.8.11",

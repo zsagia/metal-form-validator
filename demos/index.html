@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Demo: FormValidator</title>
+
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" href="../build/formValidator.css">
+
+		<script src="../build/globals/formValidator.js"></script>
+
+		<style>
+			body {
+				margin: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>FormValidator</h1>
+		<form id="fm">
+			<div id="textContainer">
+				<script type="text/javascript">
+					new metal.FormElementValidator(
+						{
+							formElementField: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>',
+							elementClasses: 'form-group'
+						},
+						'#textContainer');
+				</script>
+			</div>
+
+			<div id="emailContainer">
+				<script type="text/javascript">
+					new metal.FormElementValidator(
+						{
+							formElementField: '<label class="control-label" for="email1">Email1 (required)</label><div class="controls"><input class="form-control" name="email1" type="email" required /></div>',
+							elementClasses: 'form-group'
+						},
+						'#emailContainer');
+				</script>
+			</div>
+
+			<div id="urlContainer">
+				<script type="text/javascript">
+					new metal.FormElementValidator(
+						{
+							elementClasses: 'form-group',
+							formElementField: '<label class="control-label" for="url1">Url1 (required and no onInput)</label><div class="controls"><input class="form-control" name="url1" type="url" required /></div>',
+							validateOnInput: false
+						},
+						'#urlContainer');
+				</script>
+			</div>
+
+			<div id="telContainer">
+				<script type="text/javascript">
+					new metal.FormElementValidator(
+						{
+							elementClasses: 'form-group',
+							formElementField: '<label class="control-label" for="tel1">Tel1 (required and no onBlur)</label><div class="controls"><input class="form-control" name="tel1" type="number" required /></div>',
+							validateOnBlur: false
+						},
+						'#telContainer');
+				</script>
+			</div>
+
+			<div id="selectContainer">
+				<script type="text/javascript">
+					new metal.FormElementValidator(
+						{
+							elementClasses: 'form-group',
+							formElementField: '<label class="control-label" for="select1">Select1</label><div class="controls"><select class="form-control" name="cars" required><option value="">None</option><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option></select></div>'
+						},
+						'#selectContainer');
+				</script>
+			</div>
+
+			<div id="textareaContainer">
+				<script type="text/javascript">
+					new metal.FormElementValidator(
+						{
+							elementClasses: 'form-group',
+							formElementField: '<label class="control-label" for="textarea1">Textarea1</label><div class="controls"><textarea class="form-control name="textarea1" required/></div>'
+						},
+						'#textareaContainer');
+				</script>
+			</div>
+
+			<input type="submit" />
+		</form>
+	</body>
+</html>
