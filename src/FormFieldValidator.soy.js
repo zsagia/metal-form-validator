@@ -4,15 +4,15 @@ import Soy from 'metal-soy';
 var templates;
 goog.loadModule(function(exports) {
 
-// This file was automatically generated from FormElementValidator.soy.
+// This file was automatically generated from FormFieldValidator.soy.
 // Please don't edit this file by hand.
 
 /**
- * @fileoverview Templates in namespace FormElementValidator.
+ * @fileoverview Templates in namespace FormFieldValidator.
  * @public
  */
 
-goog.module('FormElementValidator.incrementaldom');
+goog.module('FormFieldValidator.incrementaldom');
 
 /** @suppress {extraRequire} */
 var soy = goog.require('soy');
@@ -38,7 +38,7 @@ var iattr = IncrementalDom.attr;
  * @param {{
  *    elementClasses: (null|string|undefined),
  *    errorMessage: (null|string|undefined),
- *    formElementField: (!soydata.SanitizedHtml|string),
+ *    fieldElement: (!soydata.SanitizedHtml|string),
  *    status: (null|string|undefined)
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
@@ -51,13 +51,13 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   var elementClasses = /** @type {null|string|undefined} */ (opt_data.elementClasses);
   soy.asserts.assertType(opt_data.errorMessage == null || (opt_data.errorMessage instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.errorMessage), 'errorMessage', opt_data.errorMessage, 'null|string|undefined');
   var errorMessage = /** @type {null|string|undefined} */ (opt_data.errorMessage);
-  soy.asserts.assertType((opt_data.formElementField instanceof Function) || (opt_data.formElementField instanceof soydata.UnsanitizedText) || goog.isString(opt_data.formElementField), 'formElementField', opt_data.formElementField, 'Function');
-  var formElementField = /** @type {Function} */ (opt_data.formElementField);
+  soy.asserts.assertType((opt_data.fieldElement instanceof Function) || (opt_data.fieldElement instanceof soydata.UnsanitizedText) || goog.isString(opt_data.fieldElement), 'fieldElement', opt_data.fieldElement, 'Function');
+  var fieldElement = /** @type {Function} */ (opt_data.fieldElement);
   soy.asserts.assertType(opt_data.status == null || (opt_data.status instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.status), 'status', opt_data.status, 'null|string|undefined');
   var status = /** @type {null|string|undefined} */ (opt_data.status);
   ie_open('div', null, null,
-      'class', 'form-element-validator' + (elementClasses ? ' ' + elementClasses : '') + (status ? ' ' + status : ''));
-    formElementField();
+      'class', 'form-field-validator' + (elementClasses ? ' ' + elementClasses : '') + (status ? ' ' + status : ''));
+    fieldElement();
     if (errorMessage) {
       ie_open('div', null, null,
           'class', 'form-validator-stack help-block');
@@ -68,18 +68,18 @@ function $render(opt_data, opt_ignored, opt_ijData) {
 }
 exports.render = $render;
 if (goog.DEBUG) {
-  $render.soyTemplateName = 'FormElementValidator.render';
+  $render.soyTemplateName = 'FormFieldValidator.render';
 }
 
-exports.render.params = ["elementClasses","errorMessage","formElementField","status"];
-exports.render.types = {"elementClasses":"string","errorMessage":"string","formElementField":"html","status":"string"};
+exports.render.params = ["elementClasses","errorMessage","fieldElement","status"];
+exports.render.types = {"elementClasses":"string","errorMessage":"string","fieldElement":"html","status":"string"};
 templates = exports;
 return exports;
 
 });
 
-class FormElementValidator extends Component {}
-Soy.register(FormElementValidator, templates);
-export { FormElementValidator, templates };
+class FormFieldValidator extends Component {}
+Soy.register(FormFieldValidator, templates);
+export { FormFieldValidator, templates };
 export default templates;
 /* jshint ignore:end */

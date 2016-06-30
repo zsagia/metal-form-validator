@@ -1,6 +1,6 @@
 'use strict';
 
-import FormElementValidator from '../FormElementValidator';
+import FormFieldValidator from '../FormFieldValidator';
 import FormValidator from '../FormValidator';
 
-export { FormElementValidator, FormValidator };
+export { FormFieldValidator, FormValidator };
