@@ -44,7 +44,8 @@ class FormFieldValidator extends Component  {
 	}
 
 	/**
-	 * In an improved version it will do some validation logic as well.
+	 * Handles native and custom validation as well.
+	 * Custom validation logic is aligned to Constraints API
 	 * @param {Object} event
 	 * @protected
 	 */
@@ -52,14 +53,16 @@ class FormFieldValidator extends Component  {
 		event.preventDefault();
 		event.stopPropagation();
 
-		var invalid, customValid = true;
+		var invalid = !event.target.validity.valid;
+
+		if (this.nativeValidation && invalid) {
+
+		}
 
 		event.target.setCustomValidity('');
 		if (this.customFunction && !this.customFunction(event)) {
 			customValid = false;
 		}
-
-		invalid = dom.match(event.target, ':invalid');
 
 		if (invalid) {
 			this.handleValidationResult_(event.target.validationMessage, this.statusClasses.hasError);
@@ -76,18 +79,17 @@ class FormFieldValidator extends Component  {
 
 FormFieldValidator.STATE = {
 	/**
-	 * If customFunction is existed then it will be ran when the native validation was successful.
-	 * @type {Function}
+	 * @type {function}
 	 */
-	customFunction: {
+	customMessageFn: {
 		validator: core.isFunction
 	},
 
 	/**
-	 * CustomErrorMessage will be displayed if the customValidation failed.
+	 * Contains the generated error message
 	 * @type {string}
 	 */
-	customErrorMessage: {
+	errorMessage_: {
 		validator: core.isString
 	},
 
@@ -95,16 +97,45 @@ FormFieldValidator.STATE = {
 	 * Contains a form element string
 	 * @type {string}
 	 */
-	fieldElement: {
+	field: {
 	   validator: core.isString
 	},
 
 	/**
-	 * Contains the generated error message
+	 *
+	 */
+	nativeValidation: {
+		validator: core.isBoolean,
+		value: true
+	},
+
+	/**
+	 *
+	 */
+	rules: {
+		validator: core.isObject
+	},
+
+	/**
+	 * Current status based on a validation logic.
+	 * It will be set either statusClasses.hasError or statusClasses.hasSuccess
 	 * @type {string}
 	 */
-	errorMessage: {
+	status_: {
 		validator: core.isString
+	},
+
+	/**
+	 * An object for to set status
+	 * @type {Object}
+	 * @default { hasError: 'has-error', hasSuccess: 'has-success' }
+	 */
+	statusClasses: {
+		validator: core.isObject,
+		value: {
+			hasError: 'has-error',
+			hasSuccess: 'has-success'
+		}
 	},
 
 	/**
@@ -125,30 +156,34 @@ FormFieldValidator.STATE = {
 	validateOnInput: {
 		validator: core.isBoolean,
 		value: true
-	},
-
-	/**
-	 * Current status based on a validation logic.
-	 * It will be set either statusClasses.hasError or statusClasses.hasSuccess
-	 * @type {string}
-	 */
-	status: {
-		validator: core.isString
-	},
-
-	/**
-	 * An object for to set status
-	 * @type {Object}
-	 * @default { hasError: 'has-error', hasSuccess: 'has-success' }
-	 */
-	statusClasses: {
-		validator: core.isObject,
-		value: {
-			hasError: 'has-error',
-			hasSuccess: 'has-success'
-		}
 	}
 };
 Soy.register(FormFieldValidator, templates);
+
+FormFieldValidator.RULES = {
+	max(value, limit) {
+		return (value <= limit);
+	},
+
+	maxLength(value, limit) {
+		return (val.length <= limit);
+	},
+
+	min(value, limit) {
+		return (value <= limit);
+	},
+
+	pattern(value, pattern) {
+
+	},
+
+	required(value) {
+		
+	},
+
+	step() {
+
+	}
+};
 
 export default FormFieldValidator;

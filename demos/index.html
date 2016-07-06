@@ -23,7 +23,7 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
+							field: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
 						},
 						'#textContainer');
 				</script>
@@ -44,7 +44,7 @@
 								return true;
 							},
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="text1">Text1 (required width custom logic)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
+							field: '<label class="control-label" for="text1">Text1 (required width custom logic)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
 						},
 						'#textContainer2');
 				</script>
@@ -55,7 +55,7 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="email1">Email1 (required)</label><div class="controls"><input class="form-control" name="email1" pattern="^((([a-z]|\\d|[!#\\$%&\'\\*\\+\\-\\/=\\?\\^_`{\\|}~]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])+(\\.([a-z]|\\d|[!#\\$%&\'\\*\\+\\-\\/=\\?\\^_`{\\|}~]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])+)*)|((\\x22)((((\\x20|\\x09)*(\\x0d\\x0a))?(\\x20|\\x09)+)?(([\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]|\\x21|[\\x23-\\x5b]|[\\x5d-\\x7e]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(\\\\([\\x01-\\x09\\x0b\\x0c\\x0d-\\x7f]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]))))*(((\\x20|\\x09)*(\\x0d\\x0a))?(\\x20|\\x09)+)?(\\x22)))@((([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?$" type="email" required /></div>'
+							field: '<label class="control-label" for="email1">Email1 (required)</label><div class="controls"><input class="form-control" name="email1" pattern="^((([a-z]|\\d|[!#\\$%&\'\\*\\+\\-\\/=\\?\\^_`{\\|}~]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])+(\\.([a-z]|\\d|[!#\\$%&\'\\*\\+\\-\\/=\\?\\^_`{\\|}~]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])+)*)|((\\x22)((((\\x20|\\x09)*(\\x0d\\x0a))?(\\x20|\\x09)+)?(([\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]|\\x21|[\\x23-\\x5b]|[\\x5d-\\x7e]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(\\\\([\\x01-\\x09\\x0b\\x0c\\x0d-\\x7f]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]))))*(((\\x20|\\x09)*(\\x0d\\x0a))?(\\x20|\\x09)+)?(\\x22)))@((([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?$" type="email" required /></div>'
 						},
 						'#emailContainer');
 				</script>
@@ -66,7 +66,7 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="url1">Url1 (required and no onInput)</label><div class="controls"><input class="form-control" name="url1" type="url" required /></div>',
+							field: '<label class="control-label" for="url1">Url1 (required and no onInput)</label><div class="controls"><input class="form-control" name="url1" type="url" required /></div>',
 							validateOnInput: false
 						},
 						'#urlContainer');
@@ -78,7 +78,7 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="tel1">Tel1 (required and no onBlur)</label><div class="controls"><input class="form-control" name="tel1" type="number" required /></div>',
+							field: '<label class="control-label" for="tel1">Tel1 (required and no onBlur)</label><div class="controls"><input class="form-control" name="tel1" type="number" required /></div>',
 							validateOnBlur: false
 						},
 						'#telContainer');
@@ -90,7 +90,7 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="select1">Select1</label><div class="controls"><select class="form-control" name="cars" required><option value="">None</option><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option></select></div>'
+							field: '<label class="control-label" for="select1">Select1</label><div class="controls"><select class="form-control" name="cars" required><option value="">None</option><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option></select></div>'
 						},
 						'#selectContainer');
 				</script>
@@ -101,7 +101,7 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							fieldElement: '<label class="control-label" for="textarea1">Textarea1</label><div class="controls"><textarea class="form-control name="textarea1" required/></div>'
+							field: '<label class="control-label" for="textarea1">Textarea1</label><div class="controls"><textarea class="form-control name="textarea1" required/></div>'
 						},
 						'#textareaContainer');
 				</script>

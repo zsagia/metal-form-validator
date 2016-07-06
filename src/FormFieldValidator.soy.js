@@ -38,7 +38,7 @@ var iattr = IncrementalDom.attr;
  * @param {{
  *    elementClasses: (null|string|undefined),
  *    errorMessage: (null|string|undefined),
- *    fieldElement: (!soydata.SanitizedHtml|string),
+ *    field: (!soydata.SanitizedHtml|string),
  *    status: (null|string|undefined)
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
@@ -51,13 +51,13 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   var elementClasses = /** @type {null|string|undefined} */ (opt_data.elementClasses);
   soy.asserts.assertType(opt_data.errorMessage == null || (opt_data.errorMessage instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.errorMessage), 'errorMessage', opt_data.errorMessage, 'null|string|undefined');
   var errorMessage = /** @type {null|string|undefined} */ (opt_data.errorMessage);
-  soy.asserts.assertType((opt_data.fieldElement instanceof Function) || (opt_data.fieldElement instanceof soydata.UnsanitizedText) || goog.isString(opt_data.fieldElement), 'fieldElement', opt_data.fieldElement, 'Function');
-  var fieldElement = /** @type {Function} */ (opt_data.fieldElement);
+  soy.asserts.assertType((opt_data.field instanceof Function) || (opt_data.field instanceof soydata.UnsanitizedText) || goog.isString(opt_data.field), 'field', opt_data.field, 'Function');
+  var field = /** @type {Function} */ (opt_data.field);
   soy.asserts.assertType(opt_data.status == null || (opt_data.status instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.status), 'status', opt_data.status, 'null|string|undefined');
   var status = /** @type {null|string|undefined} */ (opt_data.status);
   ie_open('div', null, null,
       'class', 'form-field-validator' + (elementClasses ? ' ' + elementClasses : '') + (status ? ' ' + status : ''));
-    fieldElement();
+    field();
     if (errorMessage) {
       ie_open('div', null, null,
           'class', 'form-validator-stack help-block');
@@ -71,8 +71,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'FormFieldValidator.render';
 }
 
-exports.render.params = ["elementClasses","errorMessage","fieldElement","status"];
-exports.render.types = {"elementClasses":"string","errorMessage":"string","fieldElement":"html","status":"string"};
+exports.render.params = ["elementClasses","errorMessage","field","status"];
+exports.render.types = {"elementClasses":"string","errorMessage":"string","field":"html","status":"string"};
 templates = exports;
 return exports;
 

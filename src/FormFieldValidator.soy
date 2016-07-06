@@ -2,13 +2,13 @@
 
 {template .render}
 	{@param? elementClasses: string}
-	{@param? errorMessage: string}
-	{@param fieldElement: html}
-	{@param? status: string}
-	<div class="form-field-validator{$elementClasses ? ' ' + $elementClasses : ''}{$status ? ' ' + $status : ''}">
-		{$fieldElement}
-		{if $errorMessage}
-			<div class="form-validator-stack help-block">{$errorMessage}</div>
+	{@param? errorMessage_: string}
+	{@param field: html}
+	{@param? status_: string}
+	<div class="form-field-validator{$elementClasses ? ' ' + $elementClasses : ''}{$status_ ? ' ' + $status_ : ''}">
+		{$field}
+		{if $errorMessage_}
+			<div class="form-validator-stack help-block">{$errorMessage_}</div>
 		{/if}
 	</div>
 {/template}
