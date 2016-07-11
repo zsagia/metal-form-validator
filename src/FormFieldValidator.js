@@ -4,19 +4,12 @@ import core from 'metal';
 import dom from 'metal-dom';
 import templates from './FormFieldValidator.soy';
 import Component from 'metal-component';
+import CustomValidity from './CustomValidity.js';
 import Soy from 'metal-soy';
 
 class FormFieldValidator extends Component  {
 	attached() {
 		this.delegate('invalid', 'input, select, textarea', this.validate_.bind(this));
-	}
-
-	/**
-	 * This method just set status and errorMessage attributes now.
-	 */
-	handleValidationResult_(errorMessage, status) {
-		this.errorMessage = errorMessage;
-		this.status = status;
 	}
 
 	/**
@@ -53,27 +46,17 @@ class FormFieldValidator extends Component  {
 		event.preventDefault();
 		event.stopPropagation();
 
-		var invalid = !event.target.validity.valid;
+		var element = event.target;
+		var customValidity = new CustomValidity({
+			customMessageFn: this.customMessageFn,
+			element: element,
+			rules: this.rules,
+			type: element.type,
+			value: element.value
+		});
 
-		if (this.nativeValidation && invalid) {
-
-		}
-
-		event.target.setCustomValidity('');
-		if (this.customFunction && !this.customFunction(event)) {
-			customValid = false;
-		}
-
-		if (invalid) {
-			this.handleValidationResult_(event.target.validationMessage, this.statusClasses.hasError);
-		}
-		else if (!customValid) {
-			event.target.setCustomValidity(this.customErrorMessage);
-			this.handleValidationResult_(this.customErrorMessage, this.statusClasses.hasError);
-		}
-		else {
-			this.handleValidationResult_('', this.statusClasses.hasSuccess);
-		}	
+		this.errorMessage_ = customValidity.validationMessages[0];
+		this.status_ = customValidity.valid_ ? this.statusClasses.hasSuccess : this.statusClasses.hasError;
 	}
 }
 
@@ -99,14 +82,6 @@ FormFieldValidator.STATE = {
 	 */
 	field: {
 	   validator: core.isString
-	},
-
-	/**
-	 *
-	 */
-	nativeValidation: {
-		validator: core.isBoolean,
-		value: true
 	},
 
 	/**
@@ -159,31 +134,5 @@ FormFieldValidator.STATE = {
 	}
 };
 Soy.register(FormFieldValidator, templates);
-
-FormFieldValidator.RULES = {
-	max(value, limit) {
-		return (value <= limit);
-	},
-
-	maxLength(value, limit) {
-		return (val.length <= limit);
-	},
-
-	min(value, limit) {
-		return (value <= limit);
-	},
-
-	pattern(value, pattern) {
-
-	},
-
-	required(value) {
-		
-	},
-
-	step() {
-
-	}
-};
 
 export default FormFieldValidator;

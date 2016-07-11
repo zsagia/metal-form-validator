@@ -23,7 +23,19 @@
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
+							field: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>',
+							customMessageFn: function(ruleName) {
+								var message = '';
+
+								if (ruleName === 'valueMissing') {
+									message = "Bla Bla Bla!";
+								}
+
+								return message;
+							},
+							rules: {
+								native: false
+							}
 						},
 						'#textContainer');
 				</script>
