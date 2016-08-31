@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Demo: FormValidator</title>
+
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" href="../build/formValidator.css">
+
+		<script src="../build/globals/formValidator.js"></script>
+
+		<style>
+			body {
+				margin: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>FormElementValidator for required text fields</h1>
+		<form id="fm1">
+			<div id="textContainer">
+				<script type="text/javascript">
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
+						},
+						'#textContainer'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text2">Text2 (required)</label><div class="controls"><input class="form-control" name="text2" type="text" required /></div>',
+							customMessageFn: function(ruleName) {
+								var message = '';
+
+								if ((ruleName === 'valueMissing') || (ruleName === 'required')) {
+									message = "Value is empty!";
+								}
+
+								return message;
+							}
+						},
+						'#textContainer'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text3">Text3 (required)</label><div class="controls"><input class="form-control" name="text3" type="text" /></div>',
+							customMessageFn: function(ruleName) {
+								var message = '';
+
+								if ((ruleName === 'valueMissing') || (ruleName === 'required')) {
+									message = "Bla Bla Bla!";
+								}
+
+								return message;
+							},
+							rules: {
+								native: false,
+								required: true
+							}
+						},
+						'#textContainer'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text4">Text4 (required)</label><div class="controls"><input class="form-control" name="text4" type="text" /></div>',
+							rules: {
+								native: false,
+								required: true
+							}
+						},
+						'#textContainer'
+					);
+				</script>
+			</div>
+
+			
+
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>max</strong> rule</h1>
+		<form id="fm2">
+			<div id="textContainer2">
+				<script type="text/javascript">
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number1">Number1 (required) max=5</label><div class="controls"><input type="number" name="number1" max="5" required></div>'
+						},
+						'#textContainer2'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number2">Number2: max value is 5</label><div class="controls"><input name="number2" /></div>',
+							rules: {
+								native: false,
+								max: {
+									value: 5
+								}
+							}
+						},
+						'#textContainer2'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number3">Number3 (required): max value is 10</label><div class="controls"><input></div>',
+							rules: {
+								native: false,
+								required: true,
+								max: {
+									value: 10
+								}
+							}
+						},
+						'#textContainer2'
+					);
+					
+				</script>
+			</div>
+
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>min</strong> rule</h1>
+		<form id="fm3">
+			<div id="textContainer3">
+				<script type="text/javascript">
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number4">Number4 (required) min=5</label><div class="controls"><input type="number" name="number4" min="5" required></div>'
+						},
+						'#textContainer3'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number5">Number5: min value is 5</label><div class="controls"><input name="number5"/></div>',
+							rules: {
+								native: false,
+								min: {
+									value: 5
+								}
+							}
+						},
+						'#textContainer3'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number6">Number6 (required): max value is 10</label><div class="controls"><input name="number6"/></div>',
+							rules: {
+								native: false,
+								required: true,
+								min: {
+									value: 10
+								}
+							}
+						},
+						'#textContainer3'
+					);
+					
+				</script>
+			</div>
+
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>min</strong> and <strong>max</strong> rules</h1>
+		<form id="fm4">
+			<div id="textContainer4">
+				<script type="text/javascript">
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number7">Number7 (required) min=5 - max=10</label><div class="controls"><input type="number" name="number7" min="5" max="10" required></div>'
+						},
+						'#textContainer4'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number8">Number8: min=5 - max=10</label><div class="controls"><input name="number8" /></div>',
+							rules: {
+								native: false,
+								max: {
+									value: 10
+								},
+								min: {
+									value: 5
+								}
+							}
+						},
+						'#textContainer4'
+					);
+				</script>
+			</div>
+
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>minLength</strong> and <strong>maxLength</strong> rules</h1>
+		<form id="fm5">
+			<div id="textContainer5">
+				<script type="text/javascript">
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text5">Text5 (required) Native validation uses only maxLength attribute, maxLength=10</label><div class="controls"><input type="text" name="text5" maxLength="10" required /></div>'
+						},
+						'#textContainer5'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text6">Text6 (required) maxLength=10</label><div class="controls"><input type="text" name="text6" /></div>',
+							rules: {
+								native: false,
+								required: true,
+								maxLength: {
+									value: 10
+								}
+							}
+						},
+						'#textContainer5'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text7">Text7 (required) minLength=10</label><div class="controls"><input type="text" name="text7" /></div>',
+							rules: {
+								native: false,
+								required: true,
+								minLength: {
+									value: 10
+								}
+							}
+						},
+						'#textContainer5'
+					);
+				</script>
+			</div>
+
+			<input type="submit" />
+		</form>
+	</body>
+</html>
