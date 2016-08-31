@@ -254,6 +254,35 @@
 						},
 						'#textContainer5'
 					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text8">Text8 (required) minLength=5 - maxLength=10 with a custom error message</label><div class="controls"><input type="text" name="text8" /></div>',
+							customMessageFn: function(ruleName) {
+								var message = '';
+
+								if (ruleName === 'minLength') {
+									message = "Please give a longer message";
+								} else if (ruleName === 'maxLength') {
+									message = "Please give a shorter message";
+								}
+
+								return message;
+							},
+							rules: {
+								native: false,
+								required: true,
+								maxLength: {
+									value: 10
+								},
+								minLength: {
+									value: 5
+								}
+							}
+						},
+						'#textContainer5'
+					);
 				</script>
 			</div>
 
