@@ -46,16 +46,17 @@ class FormFieldValidator extends Component  {
 		event.preventDefault();
 		event.stopPropagation();
 
-		var element = event.target;
-		var customValidity = new CustomValidity({
-			customMessageFn: this.customMessageFn,
-			element: element,
-			rules: this.rules,
-			type: element.type,
-			value: element.value
-		});
+		let element = event.target;
 
-		this.errorMessage_ = customValidity.validationMessages[0];
+		let customValidity = new CustomValidity(
+			{
+				customMessageFn: this.customMessageFn,
+				element: element,
+				rules: this.rules
+			}
+		);
+
+		this.errorMessage_ = customValidity.valid_ ? '' : customValidity.getValidationMessages()[0];
 		this.status_ = customValidity.valid_ ? this.statusClasses.hasSuccess : this.statusClasses.hasError;
 	}
 }

@@ -16,106 +16,244 @@
 		</style>
 	</head>
 	<body>
-		<h1>FormValidator</h1>
-		<form id="fm">
+		<h1>FormElementValidator for required text fields</h1>
+		<form id="fm1">
 			<div id="textContainer">
 				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>',
+							field: '<label class="control-label" for="text1">Text1 (required)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
+						},
+						'#textContainer'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text2">Text2 (required)</label><div class="controls"><input class="form-control" name="text2" type="text" required /></div>',
 							customMessageFn: function(ruleName) {
 								var message = '';
 
-								if (ruleName === 'valueMissing') {
+								if ((ruleName === 'valueMissing') || (ruleName === 'required')) {
+									message = "Value is empty!";
+								}
+
+								return message;
+							}
+						},
+						'#textContainer'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text3">Text3 (required)</label><div class="controls"><input class="form-control" name="text3" type="text" /></div>',
+							customMessageFn: function(ruleName) {
+								var message = '';
+
+								if ((ruleName === 'valueMissing') || (ruleName === 'required')) {
 									message = "Bla Bla Bla!";
 								}
 
 								return message;
 							},
 							rules: {
-								native: false
+								native: false,
+								required: true
 							}
 						},
-						'#textContainer');
+						'#textContainer'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="text4">Text4 (required)</label><div class="controls"><input class="form-control" name="text4" type="text" /></div>',
+							rules: {
+								native: false,
+								required: true
+							}
+						},
+						'#textContainer'
+					);
 				</script>
 			</div>
 
+			
+
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>max</strong> rule</h1>
+		<form id="fm2">
 			<div id="textContainer2">
 				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
-							customErrorMessage: "NoNo. You should give a longer text!",
-							customFunction: function(event) {
-								var value = event.target.value;
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number1">Number1 (required) max=5</label><div class="controls"><input type="number" name="number1" max="5" required></div>'
+						},
+						'#textContainer2'
+					);
 
-								if (value.length < 3) {
-									return false
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number2">Number2: max value is 5</label><div class="controls"><input name="number2" /></div>',
+							rules: {
+								native: false,
+								max: {
+									value: 5
 								}
-
-								return true;
-							},
-							elementClasses: 'form-group',
-							field: '<label class="control-label" for="text1">Text1 (required width custom logic)</label><div class="controls"><input class="form-control" name="text1" type="text" required /></div>'
+							}
 						},
-						'#textContainer2');
+						'#textContainer2'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number3">Number3 (required): max value is 10</label><div class="controls"><input></div>',
+							rules: {
+								native: false,
+								required: true,
+								max: {
+									value: 10
+								}
+							}
+						},
+						'#textContainer2'
+					);
+					
 				</script>
 			</div>
 
-			<div id="emailContainer">
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>min</strong> rule</h1>
+		<form id="fm3">
+			<div id="textContainer3">
 				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="email1">Email1 (required)</label><div class="controls"><input class="form-control" name="email1" pattern="^((([a-z]|\\d|[!#\\$%&\'\\*\\+\\-\\/=\\?\\^_`{\\|}~]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])+(\\.([a-z]|\\d|[!#\\$%&\'\\*\\+\\-\\/=\\?\\^_`{\\|}~]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])+)*)|((\\x22)((((\\x20|\\x09)*(\\x0d\\x0a))?(\\x20|\\x09)+)?(([\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]|\\x21|[\\x23-\\x5b]|[\\x5d-\\x7e]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(\\\\([\\x01-\\x09\\x0b\\x0c\\x0d-\\x7f]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]))))*(((\\x20|\\x09)*(\\x0d\\x0a))?(\\x20|\\x09)+)?(\\x22)))@((([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?$" type="email" required /></div>'
+							field: '<label class="control-label" for="number4">Number4 (required) min=5</label><div class="controls"><input type="number" name="number4" min="5" required></div>'
 						},
-						'#emailContainer');
+						'#textContainer3'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number5">Number5: min value is 5</label><div class="controls"><input name="number5"/></div>',
+							rules: {
+								native: false,
+								min: {
+									value: 5
+								}
+							}
+						},
+						'#textContainer3'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number6">Number6 (required): max value is 10</label><div class="controls"><input name="number6"/></div>',
+							rules: {
+								native: false,
+								required: true,
+								min: {
+									value: 10
+								}
+							}
+						},
+						'#textContainer3'
+					);
+					
 				</script>
 			</div>
 
-			<div id="urlContainer">
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>min</strong> and <strong>max</strong> rules</h1>
+		<form id="fm4">
+			<div id="textContainer4">
 				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="url1">Url1 (required and no onInput)</label><div class="controls"><input class="form-control" name="url1" type="url" required /></div>',
-							validateOnInput: false
+							field: '<label class="control-label" for="number7">Number7 (required) min=5 - max=10</label><div class="controls"><input type="number" name="number7" min="5" max="10" required></div>'
 						},
-						'#urlContainer');
+						'#textContainer4'
+					);
+
+					new metal.FormFieldValidator(
+						{
+							elementClasses: 'form-group',
+							field: '<label class="control-label" for="number8">Number8: min=5 - max=10</label><div class="controls"><input name="number8" /></div>',
+							rules: {
+								native: false,
+								max: {
+									value: 10
+								},
+								min: {
+									value: 5
+								}
+							}
+						},
+						'#textContainer4'
+					);
 				</script>
 			</div>
 
-			<div id="telContainer">
+			<input type="submit" />
+		</form>
+
+		<h1>FormElementValidator for <strong>minLength</strong> and <strong>maxLength</strong> rules</h1>
+		<form id="fm5">
+			<div id="textContainer5">
 				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="tel1">Tel1 (required and no onBlur)</label><div class="controls"><input class="form-control" name="tel1" type="number" required /></div>',
-							validateOnBlur: false
+							field: '<label class="control-label" for="text5">Text5 (required) Native validation uses only maxLength attribute, maxLength=10</label><div class="controls"><input type="text" name="text5" maxLength="10" required /></div>'
 						},
-						'#telContainer');
-				</script>
-			</div>
+						'#textContainer5'
+					);
 
-			<div id="selectContainer">
-				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="select1">Select1</label><div class="controls"><select class="form-control" name="cars" required><option value="">None</option><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option></select></div>'
+							field: '<label class="control-label" for="text6">Text6 (required) maxLength=10</label><div class="controls"><input type="text" name="text6" /></div>',
+							rules: {
+								native: false,
+								required: true,
+								maxLength: {
+									value: 10
+								}
+							}
 						},
-						'#selectContainer');
-				</script>
-			</div>
+						'#textContainer5'
+					);
 
-			<div id="textareaContainer">
-				<script type="text/javascript">
 					new metal.FormFieldValidator(
 						{
 							elementClasses: 'form-group',
-							field: '<label class="control-label" for="textarea1">Textarea1</label><div class="controls"><textarea class="form-control name="textarea1" required/></div>'
+							field: '<label class="control-label" for="text7">Text7 (required) minLength=10</label><div class="controls"><input type="text" name="text7" /></div>',
+							rules: {
+								native: false,
+								required: true,
+								minLength: {
+									value: 10
+								}
+							}
 						},
-						'#textareaContainer');
+						'#textContainer5'
+					);
 				</script>
 			</div>
 
