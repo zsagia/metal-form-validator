@@ -73,6 +73,9 @@ class CustomValidity extends State {
 		return errors;
 	}
 
+	/**
+	 *
+	 */
 	getValidationMessages() {
 		return this.validationMessages_;
 	}
@@ -144,33 +147,54 @@ CustomValidity.STATE = {
  *
  */
 CustomValidity.STRINGS = {
-	DEFAULT: 'Please fix field.',
-	acceptFiles: 'Please enter a value with a valid extension in field.',
-	alpha: 'Please enter only alpha characters in field.',
-	alphanum: 'Please enter only alphanumeric characters in field.',
-	date: 'Please enter a valid date in field.',
-	digits: 'Please enter only digits in field.',
-	email: 'Please enter a valid email address in field.',
-	equalTo: 'Please enter the same value again in field.',
-	iri: 'Please enter a valid IRI in field.',
-	max: 'Please enter a value less than or equal to {0} in field.',
-	maxLength: 'Please enter no more than {0} characters in {field}.',
-	min: 'Please enter a value greater than or equal to {0} in {field}.',
-	minLength: 'Please enter at least {0} characters in {field}.',
-	number: 'Please enter a valid number in {field}.',
-	range: 'Please enter a value between {0} and {1} in {field}.',
-	rangeLength: 'Please enter a value between {0} and {1} characters long in {field}.',
-	required: 'Field is required.',
-	url: 'Please enter a valid URL in {field}.'
+	DEFAULT: 'Please fix ${params[0]}.',
+	acceptFiles: 'Please enter a value with a valid extension (${params[0]}) in ${params[1]}.',
+	alpha: 'Please enter only alpha characters in ${params[0]}.',
+	alphanum: 'Please enter only alphanumeric characters in ${params[0]}.',
+	date: 'Please enter a valid date in ${params[0]}.',
+	digits: 'Please enter only digits in ${params[0]}.',
+	email: 'Please enter a valid email address in ${params[0]}.',
+	equalTo: 'Please enter the same value again in ${params[0]}.',
+	iri: 'Please enter a valid IRI in ${params[0]}.',
+	max: 'Please enter a value less than or equal to ${params[0]} in ${params[1]}.',
+	maxLength: 'Please enter no more than ${params[0]} characters in ${params[1]}.',
+	min: 'Please enter a value greater than or equal to ${params[0]} in ${params[1]}.',
+	minLength: 'Please enter at least ${params[0]} characters in ${params[1]}.',
+	number: 'Please enter a valid number in ${params[0]}.',
+	range: 'Please enter a value between ${params[0]} and ${params[1]} in ${params[2]}.',
+	rangeLength: 'Please enter a value between ${params[0]} and ${params[1]} characters long in ${params[2]}.',
+	required: '${params[0]} is required.',
+	url: 'Please enter a valid URL in ${params[0]}.'
 };
 
 /**
  *
  */
 CustomValidity.RULES = {
-	/**
-	 *
-	 */
+	acceptFiles: function(value, ruleValue) {
+		var regex = null;
+
+		if (core.isString(ruleValue)) {
+			var extensions = ruleValue.replace(/\./g, '').split(/,\s*|\b\s*/);
+
+			regex = new RegExp('[.](' + extensions.join('|') + ')$', 'i');
+		}
+
+		return regex && regex.test(val);
+	},
+
+	date: function(value) {
+		var date = new Date(value);
+
+		return ((date !== 'Invalid Date') && !isNaN(date));
+	},
+
+	equalTo: function(value, ruleValue) {
+		var comparator = document.getElementById(ruleValue);
+
+		return comparator && (trim(comparator.val()) === value);
+	},
+
 	max(value, ruleValue) {
 		if (value) {
 			return (value <= ruleValue);
@@ -179,9 +203,6 @@ CustomValidity.RULES = {
 		return true;
 	},
 
-	/**
-	 *
-	 */
 	maxLength(value, ruleValue) {
 		if (value) {
 			return (value.length <= ruleValue);
@@ -190,9 +211,6 @@ CustomValidity.RULES = {
 		return true;
 	},
 
-	/**
-	 *
-	 */
 	min(value, ruleValue) {
 		if (value) {
 			return (value >= ruleValue);
@@ -201,34 +219,22 @@ CustomValidity.RULES = {
 		return true;
 	},
 
-	/**
-	 *
-	 */
 	minLength(value, ruleValue) {
 		if (value) {
 			return (value.length >= ruleValue);
 		}
 
 		return true;
-	}, 
+	},
 
-	/**
-	 *
-	 */
 	pattern(value, ruleValue) {
 
 	},
 
-	/**
-	 *
-	 */
 	required(value) {
 		return !!value;
 	},
 
-	/**
-	 *
-	 */
 	step() {
 
 	}
